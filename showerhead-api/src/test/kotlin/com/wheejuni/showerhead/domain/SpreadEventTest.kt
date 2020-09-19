@@ -13,7 +13,8 @@ internal class SpreadEventTest {
 
         //when
         val transactionId = "xyz"
-        eventObject = SpreadEvent(transactionId)
+        val userId = "asdf"
+        eventObject = SpreadEvent(transactionId, userId)
 
         //then
         assertTrue(eventObject.valid)

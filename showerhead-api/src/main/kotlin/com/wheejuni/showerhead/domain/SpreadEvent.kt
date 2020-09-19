@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-class SpreadEvent(val transactionId: String) {
+class SpreadEvent(val transactionId: String, val generatorId: String) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

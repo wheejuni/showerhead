@@ -23,7 +23,8 @@ internal class SpreadEventRepositoryTest {
 
         //given
         val tid = "xyz"
-        val event = SpreadEvent(tid)
+        val uid = "asb"
+        val event = SpreadEvent(tid, uid)
 
         //when
         repository.save(event)
