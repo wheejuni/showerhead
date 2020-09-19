@@ -43,6 +43,7 @@ dependencies {
     }
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:mysql")
+    testImplementation("com.github.javafaker:javafaker:1.0.2")
 }
 
 dependencyManagement {
