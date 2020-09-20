@@ -41,7 +41,11 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
-    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
+    implementation ("org.testcontainers:testcontainers:1.14.3")
+    implementation("org.testcontainers:junit-jupiter")
+    implementation("com.github.kstyrc:embedded-redis:0.6")
+    implementation("org.springframework.boot:spring-boot-test:2.3.4.RELEASE")
     testImplementation("org.testcontainers:mysql")
     testImplementation("com.github.javafaker:javafaker:1.0.2")
 }
