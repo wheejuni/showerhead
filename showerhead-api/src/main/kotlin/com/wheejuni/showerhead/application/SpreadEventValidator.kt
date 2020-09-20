@@ -14,8 +14,8 @@ class SpreadEventValidator(
         private val template: RedisTemplate<String, CacheableSpreadEvent>,
         private val cacheRepository: CacheableSpreadEventRepository) {
 
-    fun cacheNewEvent(event: SpreadEvent) {
-        cacheRepository.save(CacheableSpreadEvent(event.transactionId))
+    fun cacheNewEvent(event: CacheableSpreadEvent) {
+        cacheRepository.save(event)
     }
 
     fun addOnReceiversList(transactionId: String, receiverId: String): CacheableSpreadEvent {
@@ -31,7 +31,7 @@ class SpreadEventValidator(
         return cacheRepository.save(existingEvent)
     }
 
-    fun isValidRequest(transactionId: String) {
-
+    fun isValidRequest(transactionId: String): Boolean {
+        return cacheRepository.findById(transactionId).isPresent
     }
 }
