@@ -11,8 +11,8 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
 
-    @OneToMany(mappedBy = "transactionEvent")
-    var amounts: List<SpreadAmount> = emptyList()
+    @OneToMany(mappedBy = "transactionEvent", cascade = [CascadeType.MERGE])
+    var amounts: MutableList<SpreadAmount> = mutableListOf()
 
     var roomId: String? = null
 
@@ -25,4 +25,29 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
 
     var valid: Boolean = true
         private set
+
+    fun invalidate() {
+        this.valid = false
+    }
+
+    fun setGeneratedSpreadAmount(amounts: List<SpreadAmount>) {
+        this.amounts = amounts.toCollection(mutableListOf())
+    }
+
+    fun checkAlreadyProcessedReceiver(receiverId: String): Boolean {
+        return amounts
+                .map { it.isMatchingReceiverId(receiverId) }
+                .any { it }
+                .not()
+    }
+
+    fun getAmountForReceiver(receiverId: String): SpreadAmount {
+        val designatedAmount = this.amounts.first { it.isValid() }
+        this.amounts.remove(designatedAmount)
+
+        designatedAmount.allocateSpreadAmountToUser(receiverId)
+        this.amounts.add(designatedAmount)
+
+        return designatedAmount
+    }
 }
