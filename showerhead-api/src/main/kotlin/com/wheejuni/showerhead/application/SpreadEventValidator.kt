@@ -20,7 +20,12 @@ class SpreadEventValidator(
         cacheRepository.save(event)
     }
 
-    fun isValidRequest(transactionId: String): Boolean {
-        return cacheRepository.findById(transactionId).isPresent
+    fun isValidRequest(transactionId: String, requesterId: String): Boolean {
+        val maybeCachedEvent = cacheRepository.findById(transactionId)
+
+        if(maybeCachedEvent.isPresent.not()) {
+            return false
+        }
+        return (maybeCachedEvent.get().requesterIdentity == requesterId).not()
     }
 }

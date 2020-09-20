@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest
 import org.springframework.context.annotation.Import
 
-val TESTABLE_SPREAD_EVENT = CacheableSpreadEvent(tid)
+const val TESTABLE_SPREAD_EVENT_REQUESTER_ID = "hello.gutentag"
+
+val TESTABLE_SPREAD_EVENT = CacheableSpreadEvent(tid, TESTABLE_SPREAD_EVENT_REQUESTER_ID)
 
 @Import(TestCacheConfig::class)
 @DataRedisTest

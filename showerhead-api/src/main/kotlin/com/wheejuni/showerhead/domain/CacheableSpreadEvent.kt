@@ -6,5 +6,4 @@ import org.springframework.data.redis.core.RedisHash
 import org.springframework.data.redis.core.TimeToLive
 
 @RedisHash(value = "spreadevent", timeToLive = SPREAD_EVENT_TIMEOUT_IN_SECONDS)
-class CacheableSpreadEvent(@Id val eventId: String) {
-}
+class CacheableSpreadEvent(@Id val eventId: String, val requesterIdentity: String)

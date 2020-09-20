@@ -23,18 +23,18 @@ class SpreadService(
         generatedEvent.setGeneratedSpreadAmount(amountGenerator.generateSpreadAmount(generatedEvent))
         generatedEvent.roomId = identity.roomId
 
-        validator.cacheNewEvent(CacheableSpreadEvent(generatedEvent.transactionId))
+        validator.cacheNewEvent(CacheableSpreadEvent(generatedEvent.transactionId, identity.userId))
 
         return repository.save(generatedEvent).transactionId
     }
 
     @Transactional
     fun getAmountOnRequest(transactionId: String, identity: RequesterIdentity): SpreadAmount {
-        if(!validator.isValidRequest(transactionId)) {
+        if(!validator.isValidRequest(transactionId, identity.userId)) {
             throw IllegalArgumentException("존재하지 않거나, 만료된 요청입니다.")
         }
 
-        val event = repository.findByTransacionIdAndRoomId(transactionId, identity.roomId) ?: throw IllegalArgumentException("존재하지 않는 요청입니다.")
+        val event = repository.findByTransactionIdAndRoomId(transactionId, identity.roomId) ?: throw IllegalArgumentException("존재하지 않는 요청입니다.")
 
         return event.getAmountForReceiver(identity.userId)
     }

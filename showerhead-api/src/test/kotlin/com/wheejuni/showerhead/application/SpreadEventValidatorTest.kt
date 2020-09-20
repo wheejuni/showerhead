@@ -3,8 +3,10 @@ package com.wheejuni.showerhead.application
 import com.wheejuni.showerhead.domain.CacheableSpreadEvent
 
 import com.wheejuni.showerhead.domain.TESTABLE_SPREAD_EVENT
+import com.wheejuni.showerhead.domain.TESTABLE_SPREAD_EVENT_REQUESTER_ID
 import com.wheejuni.showerhead.domain.repositories.cache.CacheableSpreadEventRepository
 import com.wheejuni.showerhead.domain.repositories.tid
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -41,6 +43,19 @@ internal class SpreadEventValidatorTest {
         validator.cacheNewEvent(eventObject)
 
         //then
-        validator.isValidRequest(tid)
+        validator.isValidRequest(tid, TESTABLE_SPREAD_EVENT_REQUESTER_ID)
+    }
+
+    @Test
+    fun `validation 테스트`() {
+        //given
+        val eventObject = TESTABLE_SPREAD_EVENT
+
+        //when
+        validator.cacheNewEvent(eventObject)
+        val validationResult = validator.isValidRequest(tid, TESTABLE_SPREAD_EVENT_REQUESTER_ID)
+
+        //then
+        assertFalse(validationResult)
     }
 }
