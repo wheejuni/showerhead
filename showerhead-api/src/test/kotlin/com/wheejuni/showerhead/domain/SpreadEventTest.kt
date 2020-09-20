@@ -41,7 +41,7 @@ internal class SpreadEventTest {
         val amount = eventObject.getAmountForReceiver(requestedReceiverId)
 
         //then
-        assertFalse(eventObject.checkAlreadyProcessedReceiver(requestedReceiverId))
+        assertTrue(eventObject.checkAlreadyProcessedReceiver(requestedReceiverId))
         assertTrue(amount.isMatchingReceiverId(requestedReceiverId))
     }
 }
