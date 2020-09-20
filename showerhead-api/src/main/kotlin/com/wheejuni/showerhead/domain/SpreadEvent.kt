@@ -1,5 +1,7 @@
 package com.wheejuni.showerhead.domain
 
+import com.wheejuni.showerhead.view.dto.SpreadRequestDto
+import com.wheejuni.showerhead.view.handlerargument.RequesterIdentity
 import org.springframework.data.annotation.CreatedDate
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -25,6 +27,17 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
 
     var valid: Boolean = true
         private set
+
+    companion object {
+
+        @JvmStatic
+        fun fromGenerationRequest(dto: SpreadRequestDto, identity: RequesterIdentity, tid: String): SpreadEvent {
+            val generatedObject = SpreadEvent(tid, identity.userId)
+
+            generatedObject.amount = dto.requestAmount
+            return generatedObject
+        }
+    }
 
     fun invalidate() {
         this.valid = false
