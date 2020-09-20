@@ -36,7 +36,7 @@ internal class CacheableSpreadEventTest {
     fun `유저아이디 추가 기능 테스트`() {
         //given
         val event = repository.findById(tid)
-        val testUserIds = (0..3).map { it.toString() }
+        val testUserIds = (0..3).map { it.toString() }.toCollection(mutableListOf())
 
         //when
         val concreteEvent = event.get()

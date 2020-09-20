@@ -1,10 +1,11 @@
 package com.wheejuni.showerhead.domain
 
+import com.wheejuni.showerhead.application.SPREAD_EVENT_TIMEOUT_IN_SECONDS
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 
-@RedisHash("spreadevent")
+@RedisHash(value = "spreadevent", timeToLive = SPREAD_EVENT_TIMEOUT_IN_SECONDS)
 class CacheableSpreadEvent(@Id val eventId: String) {
 
-    var receivedUserIds: List<String> = emptyList()
+    var receivedUserIds: MutableList<String> = mutableListOf()
 }
