@@ -1,21 +1,21 @@
 POST http://localhost:8080/api/v1/spread
 Content-Type: application/json
 X-ROOM-ID: abc
-X-USER-ID: hello.gutentag
+X-USER-ID: {{testable_requester_id}}
 
 {"request_amount" :  60000, "request_receiver_count" :  5}
 
 ###
 
-GET http://localhost:8080/api/v1/getmoney/4c6
+GET http://localhost:8080/api/v1/getmoney/{{transactionId}}
 Content-Type: application/json
 X-ROOM-ID: abc
-X-USER-ID: zella.ddo
+X-USER-ID: {{testable_user_id}}
 
 
 ###
 
-GET http://localhost:8080/api/v1/details/4c6
+GET http://localhost:8080/api/v1/details/{{transactionId}}
 Content-Type: application/json
 X-ROOM-ID: abc
-X-USER-ID: hello.gutentag
+X-USER-ID: {{testable_requester_id}}
