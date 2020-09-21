@@ -27,7 +27,7 @@ internal class SpreadServiceTest {
         val generatedEventId = service.newEvent(testRequest, testIdentity)
 
         //when
-        val idLength = generatedEventId.length
+        val idLength = generatedEventId.generatedTransactionId.length
 
         //then
         assertTrue(idLength == 3)
@@ -38,7 +38,7 @@ internal class SpreadServiceTest {
     fun `뿌리기 받기 테스트`() {
         //given
         val receiverId = "zella.ddo"
-        val eventId = service.newEvent(testRequest, testIdentity)
+        val eventId = service.newEvent(testRequest, testIdentity).generatedTransactionId
 
         //when
         val amount = service.getAmountOnRequest(eventId, RequesterIdentity(receiverId, TEST_ROOM_ID))
@@ -57,7 +57,7 @@ internal class SpreadServiceTest {
         val requesterId = "zella.ddo"
         val testIdentity = RequesterIdentity(requesterId, TEST_ROOM_ID)
 
-        val eventId = service.newEvent(testRequest, testIdentity)
+        val eventId = service.newEvent(testRequest, testIdentity).generatedTransactionId
 
         val invalidIdentity = RequesterIdentity(TESTABLE_SPREAD_EVENT_REQUESTER_ID, TEST_ROOM_ID)
 

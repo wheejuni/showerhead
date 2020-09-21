@@ -84,6 +84,10 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
         return designatedAmount
     }
 
+    fun toEventResponse(): NewSpreadEventResponse {
+        return NewSpreadEventResponse(this.transactionId)
+    }
+
     fun toEventDetails(): SpreadEventDetails {
         return SpreadEventDetails(
                 createdDateTime = this.createdDateTime,
@@ -92,6 +96,9 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
                 takenDetails = this.getTakenDetails())
     }
 }
+
+data class NewSpreadEventResponse(
+        val generatedTransactionId: String)
 
 data class SpreadEventDetails(
         val createdDateTime: LocalDateTime,

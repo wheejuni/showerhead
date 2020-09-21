@@ -1,9 +1,6 @@
 package com.wheejuni.showerhead.application
 
-import com.wheejuni.showerhead.domain.CacheableSpreadEvent
-import com.wheejuni.showerhead.domain.SpreadAmount
-import com.wheejuni.showerhead.domain.SpreadEvent
-import com.wheejuni.showerhead.domain.SpreadEventDetails
+import com.wheejuni.showerhead.domain.*
 import com.wheejuni.showerhead.domain.repositories.SpreadEventRepository
 import com.wheejuni.showerhead.view.dto.SpreadRequestDto
 import com.wheejuni.showerhead.view.handlerargument.RequesterIdentity
@@ -19,14 +16,14 @@ class SpreadService(
 ) {
 
     @Transactional
-    fun newEvent(request: SpreadRequestDto, identity: RequesterIdentity): String {
+    fun newEvent(request: SpreadRequestDto, identity: RequesterIdentity): NewSpreadEventResponse {
         val generatedEvent = SpreadEvent.fromGenerationRequest(request, identity, uuidGenerator.generateTransactionId())
         generatedEvent.setGeneratedSpreadAmount(amountGenerator.generateSpreadAmount(generatedEvent))
         generatedEvent.roomId = identity.roomId
 
         validator.cacheNewEvent(CacheableSpreadEvent(generatedEvent.transactionId, identity.userId))
 
-        return repository.save(generatedEvent).transactionId
+        return repository.save(generatedEvent).toEventResponse()
     }
 
     @Transactional
