@@ -55,13 +55,27 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
                 .any()
     }
 
+    fun getTakenAmount(): Int {
+        return this.amounts.filter {
+            it.isAvailable().not()
+        }.sumBy {
+            it.amount
+        }
+    }
+
+    fun getTakenDetails(): List<SpreadAmountResponse> {
+        return this.amounts.filter {
+            it.isAvailable().not()
+        }.map { it.toResponse() }.toCollection(mutableListOf())
+    }
+
     fun getAmountForReceiver(receiverId: String): SpreadAmount {
 
         if(this.amounts.any { it.isMatchingReceiverId(receiverId) }) {
             throw IllegalArgumentException("이미 뿌리기를 받은 사용자입니다.")
         }
 
-        val designatedAmount = this.amounts.first { it.isValid() }
+        val designatedAmount = this.amounts.first { it.isAvailable() }
         this.amounts.remove(designatedAmount)
 
         designatedAmount.allocateSpreadAmountToUser(receiverId)
@@ -69,4 +83,18 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
 
         return designatedAmount
     }
+
+    fun toEventDetails(): SpreadEventDetails {
+        return SpreadEventDetails(
+                createdDateTime = this.createdDateTime,
+                amount = this.amount,
+                takenAmount = this.getTakenAmount(),
+                takenDetails = this.getTakenDetails())
+    }
 }
+
+data class SpreadEventDetails(
+        val createdDateTime: LocalDateTime,
+        val amount: Int,
+        val takenAmount: Int,
+        val takenDetails: List<SpreadAmountResponse> = emptyList())

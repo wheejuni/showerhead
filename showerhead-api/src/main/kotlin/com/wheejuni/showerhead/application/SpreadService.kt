@@ -3,6 +3,7 @@ package com.wheejuni.showerhead.application
 import com.wheejuni.showerhead.domain.CacheableSpreadEvent
 import com.wheejuni.showerhead.domain.SpreadAmount
 import com.wheejuni.showerhead.domain.SpreadEvent
+import com.wheejuni.showerhead.domain.SpreadEventDetails
 import com.wheejuni.showerhead.domain.repositories.SpreadEventRepository
 import com.wheejuni.showerhead.view.dto.SpreadRequestDto
 import com.wheejuni.showerhead.view.handlerargument.RequesterIdentity
@@ -51,4 +52,8 @@ class SpreadService(
 
         return eventObject
     }
+
+    @Transactional
+    fun getSpreadEventDetails(transactionId: String, identity: RequesterIdentity): SpreadEventDetails =
+            getSpreadEventInfo(transactionId, identity).toEventDetails()
 }

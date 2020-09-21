@@ -28,5 +28,13 @@ class SpreadAmount(amount: Int) {
         return this.receiverId.equals(receiverId, ignoreCase = false)
     }
 
-    fun isValid(): Boolean = StringUtils.isEmpty(this.receiverId)
+    fun isAvailable(): Boolean = StringUtils.isEmpty(this.receiverId)
+
+    fun toResponse(): SpreadAmountResponse {
+        return SpreadAmountResponse(this.receiverId ?: "NO-USER-ID", this.amount)
+    }
 }
+
+data class SpreadAmountResponse(
+        val receiverId: String,
+        val amount: Int)

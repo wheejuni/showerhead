@@ -8,7 +8,6 @@ import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
-import javax.servlet.http.HttpServletRequest
 
 const val USER_ID_HEADER = "X-USER-ID"
 const val ROOM_ID_HEADER = "X-ROOM-ID"
