@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service
 import java.util.concurrent.TimeUnit
 import javax.transaction.Transactional
 
-const val REDISSON_LOCK_ID = "spread-get-lock"
 const val LOCK_WAIT_DURATION_IN_MS = 100L
 const val LOCK_PERSIST_DURATION_IN_MS = 50L
 
