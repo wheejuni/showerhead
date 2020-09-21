@@ -1,0 +1,8 @@
+POST http://localhost:8080/api/v1/spread
+Content-Type: application/json
+X-ROOM-ID: abc
+X-USER-ID: hello.gutentag
+
+{"request_amount" :  60000, "request_receiver_count" :  5}
+
+###

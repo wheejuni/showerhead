@@ -3,10 +3,12 @@ package com.wheejuni.showerhead.domain
 import com.wheejuni.showerhead.view.dto.SpreadRequestDto
 import com.wheejuni.showerhead.view.handlerargument.RequesterIdentity
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
+@EntityListeners(AuditingEntityListener::class)
 class SpreadEvent(val transactionId: String, val generatorId: String) {
 
     @Id
@@ -45,7 +47,9 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
     }
 
     fun setGeneratedSpreadAmount(amounts: List<SpreadAmount>) {
-        amounts.forEach { this.amounts.add(it) }
+        amounts.forEach {
+            it.transactionEvent = this
+            this.amounts.add(it) }
     }
 
     fun checkAlreadyProcessedReceiver(receiverId: String): Boolean {
