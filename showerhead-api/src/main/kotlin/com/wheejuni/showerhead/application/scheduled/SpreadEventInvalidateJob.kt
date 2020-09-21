@@ -1,7 +1,5 @@
 package com.wheejuni.showerhead.application.scheduled
 
-import lombok.extern.slf4j.Slf4j
-import org.jboss.logging.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.scheduling.annotation.Scheduled
@@ -15,8 +13,7 @@ const val UPDATE_QUERY = """
 val logger = LoggerFactory.getLogger(SpreadEventInvalidateJob::class.java)
 
 @Component
-class SpreadEventInvalidateJob(
-        private val jdbcTemplate: JdbcTemplate) {
+class SpreadEventInvalidateJob(private val jdbcTemplate: JdbcTemplate) {
 
     @Scheduled(cron ="0 0 0 * * *")
     fun invalidateExpiredEvents() {

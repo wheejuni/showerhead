@@ -1,5 +1,6 @@
 package com.wheejuni.showerhead.domain
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.wheejuni.showerhead.view.dto.SpreadRequestDto
 import com.wheejuni.showerhead.view.handlerargument.RequesterIdentity
 import org.springframework.data.annotation.CreatedDate
@@ -75,6 +76,10 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
 
     fun getAmountForReceiver(receiverId: String): SpreadAmount {
 
+        if(LocalDateTime.now().minusMinutes(10L) > this.createdDateTime) {
+            throw IllegalArgumentException("받기 만료된 이벤트입니다.")
+        }
+
         if(this.amounts.any { it.isMatchingReceiverId(receiverId) }) {
             throw IllegalArgumentException("이미 뿌리기를 받은 사용자입니다.")
         }
@@ -105,7 +110,10 @@ data class NewSpreadEventResponse(
         val generatedTransactionId: String)
 
 data class SpreadEventDetails(
+
+        @field:JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         val createdDateTime: LocalDateTime,
+
         val amount: Int,
         val takenAmount: Int,
         val takenDetails: List<SpreadAmountResponse> = emptyList())

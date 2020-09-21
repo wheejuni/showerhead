@@ -19,12 +19,12 @@ class ApiV1Controller(
     }
 
     @GetMapping("/getmoney/{transactionId}")
-    fun getMoneyFromSpreadEventApi(identity: RequesterIdentity, @RequestParam("transactionId") transactionId: String): SpreadAmountResponse {
+    fun getMoneyFromSpreadEventApi(identity: RequesterIdentity, @PathVariable("transactionId") transactionId: String): SpreadAmountResponse {
         return spreadService.getAmountOnRequest(transactionId, identity).toResponse()
     }
 
     @GetMapping("/details/{transactionId}")
-    fun getEventDetailsApi(identity: RequesterIdentity, @RequestParam("transactionId")transactionId: String): SpreadEventDetails {
+    fun getEventDetailsApi(identity: RequesterIdentity, @PathVariable("transactionId")transactionId: String): SpreadEventDetails {
         return spreadService.getSpreadEventDetails(transactionId, identity)
     }
 }

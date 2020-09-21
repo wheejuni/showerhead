@@ -35,13 +35,12 @@ class SpreadService(
 
     @Transactional
     fun getAmountOnRequest(transactionId: String, identity: RequesterIdentity): SpreadAmount {
-        val lock = redissonClient.getLock(REDISSON_LOCK_ID)
+        val lock = redissonClient.getLock("$transactionId:${identity.userId}")
 
         val successfulLock = lock.tryLock(LOCK_WAIT_DURATION_IN_MS, LOCK_PERSIST_DURATION_IN_MS, TimeUnit.MILLISECONDS)
 
         if(successfulLock){
             if(!validator.isValidRequest(transactionId, identity.userId)) {
-                lock.unlock()
                 throw IllegalArgumentException("유효하지 않은 요청입니다.")
             }
 
@@ -53,9 +52,6 @@ class SpreadService(
 
             } catch (exception: IllegalArgumentException) {
                 throw exception
-
-            } finally {
-                lock.unlock()
             }
         }
 
