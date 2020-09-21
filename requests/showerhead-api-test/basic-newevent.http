@@ -7,15 +7,15 @@ X-USER-ID: hello.gutentag
 
 ###
 
-GET http://localhost:8080/api/v1/getmoney/0de
+GET http://localhost:8080/api/v1/getmoney/4c6
 Content-Type: application/json
 X-ROOM-ID: abc
-X-USER-ID: pony.tail
+X-USER-ID: zella.ddo
 
 
 ###
 
-GET http://localhost:8080/api/v1/details/0de
+GET http://localhost:8080/api/v1/details/4c6
 Content-Type: application/json
 X-ROOM-ID: abc
 X-USER-ID: hello.gutentag
