@@ -12,7 +12,6 @@ import org.springframework.web.method.support.ModelAndViewContainer
 const val USER_ID_HEADER = "X-USER-ID"
 const val ROOM_ID_HEADER = "X-ROOM-ID"
 
-@Component
 class UserIdentityResolver: HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean = parameter.parameterType == RequesterIdentity::class.java
 
