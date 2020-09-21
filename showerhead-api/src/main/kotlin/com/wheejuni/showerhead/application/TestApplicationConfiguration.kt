@@ -1,10 +1,13 @@
 package com.wheejuni.showerhead.application
 
+import com.wheejuni.showerhead.infra.cache.TestCacheConfig
 import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.context.annotation.Import
 import java.util.*
 
 const val TEST_RECEIVER_COUNT = 5
 
+@Import(TestCacheConfig::class)
 @TestConfiguration
 class TestApplicationConfiguration: ApplicationConfiguration() {
 

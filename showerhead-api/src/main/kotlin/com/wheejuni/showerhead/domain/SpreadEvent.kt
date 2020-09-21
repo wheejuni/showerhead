@@ -35,6 +35,7 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
             val generatedObject = SpreadEvent(tid, identity.userId)
 
             generatedObject.amount = dto.requestAmount
+            generatedObject.receiverCount = dto.requestReceiverCount
             return generatedObject
         }
     }
@@ -44,7 +45,7 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
     }
 
     fun setGeneratedSpreadAmount(amounts: List<SpreadAmount>) {
-        this.amounts = amounts.toCollection(mutableListOf())
+        amounts.forEach { this.amounts.add(it) }
     }
 
     fun checkAlreadyProcessedReceiver(receiverId: String): Boolean {
@@ -55,6 +56,11 @@ class SpreadEvent(val transactionId: String, val generatorId: String) {
     }
 
     fun getAmountForReceiver(receiverId: String): SpreadAmount {
+
+        if(this.amounts.any { it.isMatchingReceiverId(receiverId) }) {
+            throw IllegalArgumentException("이미 뿌리기를 받은 사용자입니다.")
+        }
+
         val designatedAmount = this.amounts.first { it.isValid() }
         this.amounts.remove(designatedAmount)
 

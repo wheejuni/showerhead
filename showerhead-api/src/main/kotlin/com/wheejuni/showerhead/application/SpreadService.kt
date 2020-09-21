@@ -7,7 +7,6 @@ import com.wheejuni.showerhead.domain.repositories.SpreadEventRepository
 import com.wheejuni.showerhead.view.dto.SpreadRequestDto
 import com.wheejuni.showerhead.view.handlerargument.RequesterIdentity
 import org.springframework.stereotype.Service
-import org.springframework.web.client.HttpClientErrorException
 import javax.transaction.Transactional
 
 @Service
@@ -35,7 +34,8 @@ class SpreadService(
             throw IllegalArgumentException("존재하지 않거나, 유효하지 않은 요청입니다.")
         }
 
-        val event = repository.findByTransactionIdAndRoomId(transactionId, identity.roomId) ?: throw IllegalArgumentException("존재하지 않는 요청입니다.")
+        val event = repository.findByTransactionIdAndRoomId(transactionId, identity.roomId)
+                ?: throw IllegalArgumentException("존재하지 않는 요청입니다.")
 
         return event.getAmountForReceiver(identity.userId)
     }

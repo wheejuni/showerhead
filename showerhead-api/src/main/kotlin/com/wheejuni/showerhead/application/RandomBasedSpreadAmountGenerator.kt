@@ -7,7 +7,7 @@ import java.util.*
 class RandomBasedSpreadAmountGenerator(val random: Random): SpreadAmountGenerator {
 
     override fun generateSpreadAmount(spreadEvent: SpreadEvent): List<SpreadAmount> {
-        return (0..spreadEvent.receiverCount)
+        return (0 until spreadEvent.receiverCount)
                 .map mapper@{
                     val remainingAmount = spreadEvent.amount
 
